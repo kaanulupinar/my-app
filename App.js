@@ -4,13 +4,59 @@ import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import {
   createStackNavigator,
 } from 'react-navigation';
+import { padStart } from 'lodash';
 
-const background = 'https://media.wired.com/photos/5b7f64cbbe2f8d3a624b77b2/master/pass/SPoW_82318_01.jpg'
+const background = './components/background.jpg';
 
 function PhaseScreen(props) {
-  console.log(props);
+  let date = props.navigation.state.params.day.dateString;
+  let moonphase = 0;
+  if (date.substring(5,7) === "02") {
+    moonphase = 31;
+  }
+  if (date.substring(5,7) === "03") {
+    moonphase = 59;
+  }
+  if (date.substring(5,7) === "04") {
+    moonphase = 90;
+  }
+  if (date.substring(5,7) === "05") {
+    moonphase = 120;
+  }
+  if (date.substring(5,7) === "06") {
+    moonphase = 151;
+  }
+  if (date.substring(5,7) === "07") {
+    moonphase = 181;
+  }
+  if (date.substring(5,7) === "08") {
+    moonphase = 212;
+  }
+  if (date.substring(5,7) === "09") {
+    moonphase = 243;
+  }
+  if (date.substring(5,7) === "10") {
+    moonphase = 273;
+  }
+  if (date.substring(5,7) === "11") {
+    moonphase = 304;
+  }
+  if (date.substring(5,7) === "12") {
+    moonphase = 334;
+  }
+  moonphase = (moonphase + parseInt(date.substring(8,10)))*24 - 23;
+  moonphase.toString();
+  moonphase = padStart(moonphase, 4, '0');
+  moonnumber = ('./components/scripts/moon.' + moonphase + '.jpg').toString();
+  alert(moonnumber);
   return (
-    <Text>{props.navigation.state.params.day.dateString}</Text>
+    <View>
+      <Image
+          style={{width: '100%', height: '100%'}}
+          source={require(moonnumber)}
+      />
+      <Text>{props.navigation.state.params.day.dateString}</Text>
+    </View>
   );
 }
 class HomeScreen extends React.Component {
@@ -43,7 +89,7 @@ class HomeScreen extends React.Component {
           flex: 1,
           resizeMode,
         }}
-        source={{uri: background}}
+        source={require(background)}
       />
       </View>
       <Calendar
