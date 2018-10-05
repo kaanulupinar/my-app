@@ -53,7 +53,7 @@ function PhaseScreen(props) {
     <View>
       <Image
           style={{width: '100%', height: '100%'}}
-          source={require(moonnumber)}
+          source={require('./components/scripts/moon.0001.jpg')}
       />
       <Text>{props.navigation.state.params.day.dateString}</Text>
     </View>
