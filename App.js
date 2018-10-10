@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { FlatList, ActivityIndicator, StyleSheet, Text, View, Image } from 'react-native';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import {
   createStackNavigator,
@@ -47,13 +47,20 @@ function PhaseScreen(props) {
   moonphase = (moonphase + parseInt(date.substring(8,10)))*24 - 23;
   moonphase.toString();
   moonphase = padStart(moonphase, 4, '0');
-  moonnumber = ('./components/scripts/moon.' + moonphase + '.jpg').toString();
-  alert(moonnumber);
+  // moonnumber = ('./components/scripts/moon.' + moonphase + '.jpg').toString();
+  // alert(moonphase);
   return (
     <View>
       <Image
-          style={{width: '100%', height: '100%'}}
-          source={require('./components/scripts/moon.0001.jpg')}
+          style={{
+            alignSelf: 'center',
+            height: 400,
+            width: '100%',
+            borderWidth: 100,
+            borderRadius: 75
+          }}
+          source={{uri: `https://svs.gsfc.nasa.gov/vis/a000000/a004600/a004604/frames/730x730_1x1_30p/moon.${moonphase}.jpg`}}      
+          resizeMode="cover"
       />
       <Text>{props.navigation.state.params.day.dateString}</Text>
     </View>
