@@ -1,15 +1,16 @@
 import React from 'react';
-import {  FlatList, ActivityIndicator, Text, View, Image, WebView } from 'react-native';
+import {  FlatList, ActivityIndicator, Text, View, Image, WebView, Alert } from 'react-native';
 import { padStart } from 'lodash';
+import { Button, Icon } from 'react-native-elements';
 
 export class PhaseScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { picLoading: true, infoLoading: false }
+    this.state = { infoLoading: true }
   }
   componentDidMount() {
     let date = this.props.navigation.state.params.day.dateString;
-    let moonphase;
+    let moonphase = 0;
     if (date.substring(5,7) === "02") {
       moonphase = 31;
     }
@@ -55,7 +56,6 @@ export class PhaseScreen extends React.Component {
         responseText = responseText.substring(responseText.indexOf('"<ta'), responseText.indexOf('</table>') + 9);
         responseText = responseText.replace(/"/gi, '');
         responseText = responseText.replace(/\+/g, '');
-        console.log('resonseText', responseText);
         this.setState({
           infoLoading: false,
           dataSource: responseText,
@@ -68,6 +68,7 @@ export class PhaseScreen extends React.Component {
         console.error(error);
       });
   }
+  static navigationOptions = { title: 'Phase    ' };
   render() {
     if(this.state.infoLoading){
       return(
@@ -78,7 +79,7 @@ export class PhaseScreen extends React.Component {
     }
 
     return(
-      <View>
+      <View style={{flex:1, backgroundColor: '#847373' }}>
         <Image
           style={{
             alignSelf: 'center',
@@ -90,7 +91,14 @@ export class PhaseScreen extends React.Component {
           source={{uri: `https://svs.gsfc.nasa.gov/vis/a000000/a004600/a004604/frames/730x730_1x1_30p/moon.${this.state.moonSource}.jpg`}}      
           resizeMode="cover"
       />
-        <WebView source={{ html: "<h1>Hello</h1>" }} style={{ marginTop: 20, maxHeight: 200, width: 320, flex: 1 }} />
+        <WebView source={{ html: this.state.dataSource }}  style={{ backgroundColor: '#847373' }}  />
+        <Icon
+          reverse
+          name='ios-information-circle'
+          type='ionicon'
+          color='#517fa4'
+          onPress={() => Alert.alert('About', 'All images and information are courtesy of nasa.gov')}
+        />
       </View>
     )
   }
