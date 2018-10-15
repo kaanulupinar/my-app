@@ -1,6 +1,13 @@
 {
   "expo": {
     "sdkVersion": "27.0.0",
-    "orientation": "portrait"
+    "name": "What's the moon?",
+    "icon": "./icon.png",
+    "slug": "events",
+    "orientation": "portrait",
+    "version": "1.0.1",
+    "android": {
+      "package": "com.ntropy.whatsthemoon"
+    }
   }
 }
